@@ -551,6 +551,60 @@ fun MemberDetailsScreen(
                                 text = "Edit"
                             )
                         }
+
+                            Spacer(
+                                modifier = Modifier.height(10.dp)
+                            )
+
+                            Button(
+
+                                onClick = {
+
+                                    activity.lifecycleScope.launch {
+
+                                        val database =
+                                            AppDatabase.getDatabase(
+                                                context
+                                            )
+
+                                        database.transactionDao()
+                                            .deleteTransactionsByMember(
+                                                memberId
+                                            )
+
+                                        database.transactionDao()
+                                            .deleteTransactionsByMember(
+                                                memberId
+                                            )
+
+                                        val member =
+
+                                            database.memberDao()
+                                                .getMemberByName(
+                                                    memberName
+                                                )
+
+                                        if (member != null) {
+
+                                            database.memberDao()
+                                                .deleteMember(member)
+                                        }
+
+                                        activity.finish()
+                                    }
+                                },
+
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Black
+                                )
+
+                            ) {
+
+                                Text(
+                                    text = "Delete Member"
+                                )
+                            }
+
                     }
                 }
             }
